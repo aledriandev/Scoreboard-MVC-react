@@ -34,12 +34,19 @@ class Model {
     });
   }
 
-  // increment (e) {
-  //   let id = e.evetTarget;
-  //   Console.log(e);
-  //   let actual = this.players[id-1];
-  //   return actual.score = actual.score + 1;
-  // }
+  increment (e) {
+    let id = e.target.parentNode.childNodes[1].id;
+    let actual = this.players[id-1];
+    actual.score = actual.score + 1;
+    this.callback();
+  }
+
+  decrement (e) {
+    let id = e.target.parentNode.childNodes[1].id;
+    let actual = this.players[id-1];
+    actual.score = actual.score - 1;
+    this.callback();
+  }
 }
 
 const Header = ({model}) => {
@@ -80,12 +87,9 @@ const Score = ({model}) => {
                 <div className='player-name'>{player.name}</div>
                 <div className='player-score counter'>
                   <button className='counter-action decrement' onClick={
-                    (e)=>{
-                      {/* model.decrement(e) */}
-                    console.log(e.target.parentNode.childNodes[1].id);  
-                  }}>-</button>
+                    (e)=>model.decrement(e)}>-</button>
                   <div className='counter-score' id={player.id}>{player.score}</div>
-                  <button className='counter-action  increment' onClick={()=>model.increment()}>+</button>
+                  <button className='counter-action  increment' onClick={(e)=>model.increment(e)}>+</button>
                 </div>
               </div>);
     });
