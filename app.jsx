@@ -18,6 +18,7 @@ class Model {
       },
     ];
     this.id = this.players.length;
+    this.player = '';
     this.callback = null;
   }
   
@@ -51,14 +52,27 @@ class Model {
     }
   }
 
-  addPlayer (player) {
+  addPlayer () {
     this.players.push({
-      name: player,
+      name: this.player,
       score: 0,
       id: this.id+1,
     });
+    this.player = '';
     this.callback();
   }
+
+  onChange (e) {
+    console.log(e.target.value)
+    this.player = e.target.value;
+    this.callback();
+  }
+
+  onSubmit (e) {
+    e.preventDefault();
+    this.addPlayer();
+  }
+
 }
 
 const Header = ({model}) => {
@@ -79,15 +93,11 @@ const Header = ({model}) => {
         </div>);
 };
 
-
 const PlayerForm = ({}) => {
   return (
     <div className='add-player-form'>
-      <form onSubmit={e => { 
-        e.preventDefault();
-        model.addPlayer(model.player);}}
-      >
-        <input type="text" placeholder="ENTER A NAME" onChange= {e => (model.player = e.target.value)}/>
+      <form onSubmit={e => {model.onSubmit(e)}}>
+        <input type="text" placeholder="ENTER A NAME" value={model.player} onChange={e => {model.onChange(e)}}/>
         <input type='submit' value='ADD PLAYER'/>
       </form>
     </div>
