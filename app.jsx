@@ -87,7 +87,7 @@ const PlayerForm = ({}) => {
         e.preventDefault();
         model.addPlayer(model.player);}}
       >
-        <input type="text" placeholder="ENTER A NAME" onChange={e => (model.player = e.target.value)}/>
+        <input type="text" placeholder="ENTER A NAME" onChange= {e => (model.player = e.target.value)}/>
         <input type='submit' value='ADD PLAYER'/>
       </form>
     </div>
