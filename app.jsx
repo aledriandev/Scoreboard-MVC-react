@@ -17,6 +17,7 @@ class Model {
         id: 3,
       },
     ];
+    this.id = this.players.length;
     this.callback = null;
   }
   
@@ -44,7 +45,18 @@ class Model {
   decrement (e) {
     let id = e.target.parentNode.childNodes[1].id;
     let actual = this.players[id-1];
-    actual.score = actual.score - 1;
+    if (actual.score>0) {
+      actual.score = actual.score - 1;
+      this.callback();
+    }
+  }
+
+  addPlayer (player) {
+    this.players.push({
+      name: player,
+      score: 0,
+      id: this.id+1,
+    });
     this.callback();
   }
 }
@@ -71,8 +83,11 @@ const Header = ({model}) => {
 const PlayerForm = ({}) => {
   return (
     <div className='add-player-form'>
-      <form>
-        <input type="text" placeholder="ENTER A NAME"/>
+      <form onSubmit={e => { 
+        e.preventDefault();
+        model.addPlayer(model.player);}}
+      >
+        <input type="text" placeholder="ENTER A NAME" onChange={e => (model.player = e.target.value)}/>
         <input type='submit' value='ADD PLAYER'/>
       </form>
     </div>
