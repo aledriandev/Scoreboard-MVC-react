@@ -135,8 +135,11 @@ class StopWatch extends React.Component {
     });
   }
   resetTimer () {
+    
+    clearInterval(this.timer);
     this.myCounter = 0;
     this.setState({
+      toggleBtn: 'START',
       counter: 0
     });
   }
