@@ -117,11 +117,14 @@ class StopWatch extends React.Component {
     );
   }
   startTimer () {
+    this.setState({
+      counter: this.myCounter,
+      toggleBtn: 'STOP',
+    });
     this.timer = setInterval(() => {
       this.myCounter = this.myCounter + 1;
       this.setState({
         counter: this.myCounter,
-        toggleBtn: 'STOP',
       });
     }, 1000);
   }
