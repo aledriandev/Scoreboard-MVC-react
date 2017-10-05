@@ -83,16 +83,22 @@ const Header = ({model}) => {
                 <tr><td>TOTAL POINTS: </td><td>{model.sum()}</td></tr>
               </tbody>
             </table>
-          <div className='stopwatch' >
-            <h2>STOPWHATH</h2>
-            <h1 className='stopwatch-time'>0</h1>
-            <button>START</button>
-            <button>RESET</button>
-          </div>
+          <StopWatch/>
         </div>);
 };
 
-
+class ABCquiz extends React.Component {
+  render(){
+    return (
+        <div className='stopwatch' >
+          <h2>STOPWATCH</h2>
+          <h1 className='stopwatch-time'>0</h1>
+          <button>START</button>
+          <button>RESET</button>
+        </div>
+    );
+  }
+}
 
 const PlayerForm = ({}) => {
   return (
