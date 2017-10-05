@@ -96,26 +96,38 @@ class StopWatch extends React.Component {
     this.myCounter = 0;
   }
   render(){
-    const toggle = (e) => {
+    const toggleTimer = (e) => {
       console.log('holi')
-      this.toggleTimer();
+      this.startTimer();
+    }
+    const reset = (e) => {
+      this.resetTimer();
     }
     return (
         <div className='stopwatch' >
           <h2>STOPWATCH</h2>
           <h1 className='stopwatch-time'>{this.state.counter}</h1>
-          <button onClick={toggle}>START</button>
-          <button>RESET</button>
+          <button onClick={toggleTimer}>START</button>
+          <button onClick={reset}>RESET</button>
         </div>
     );
   }
-  toggleTimer () {
+  startTimer () {
     this.timer = setInterval(() => {
       this.myCounter = this.myCounter + 1;
       this.setState({
         counter: this.myCounter
       });
     }, 1000);
+  }
+  stopTimer () {
+    clearInterval(this.timer);
+  }
+  resetTimer () {
+    this.myCounter = 0;
+    this.setState({
+      counter: 0
+    });
   }
 }
 
