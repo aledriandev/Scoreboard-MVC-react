@@ -72,7 +72,6 @@ class Model {
     e.preventDefault();
     this.addPlayer();
   }
-
 }
 
 const Header = ({model}) => {
@@ -93,6 +92,8 @@ const Header = ({model}) => {
         </div>);
 };
 
+
+
 const PlayerForm = ({}) => {
   return (
     <div className='add-player-form'>
@@ -106,7 +107,6 @@ const PlayerForm = ({}) => {
 
 const Score = ({model}) => {
   const getPlayers = () => {
-    console.log(model.players)
     return model.players.map((player, index) => {
       return (<div className='player' key={index}>
                 <div className='player-name'>{player.name}</div>
@@ -127,12 +127,9 @@ const Score = ({model}) => {
 }
 
 let model = new Model();
-let counter = 1;
 
 let render = () => {
-  console.log('render times: ', counter++);
   ReactDOM.render(<Score title="Scoreboard" model={model}/>, document.getElementById('container'));
-
 };
 model.subscribe(render); 
 render(); 
