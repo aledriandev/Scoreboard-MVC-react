@@ -55,13 +55,16 @@ class Model {
   }
 
   addPlayer() {
-    this.players.push({
-      name: this.player,
-      score: 0,
-      id: this.id + 1,
-    });
-    this.player = '';
-    this.callback();
+    if(this.player != ''){
+
+      this.players.push({
+        name: this.player,
+        score: 0,
+        id: this.id + 1,
+      });
+      this.player = '';
+      this.callback();
+    }
   }
 
   onChange(e) {
@@ -139,7 +142,6 @@ class StopWatch extends React.Component {
     });
   }
   resetTimer() {
-
     clearInterval(this.timer);
     this.myCounter = 0;
     this.setState({
