@@ -92,13 +92,17 @@ class StopWatch extends React.Component {
     super(props);
     this.state = {
       counter: 0,
+      toggleBtn: 'START',
     };
     this.myCounter = 0;
   }
   render(){
     const toggleTimer = (e) => {
-      console.log('holi')
-      this.startTimer();
+      if(this.state.toggleBtn == 'STOP'){
+        this.stopTimer();
+      }else{
+        this.startTimer();
+      }
     }
     const reset = (e) => {
       this.resetTimer();
@@ -107,7 +111,7 @@ class StopWatch extends React.Component {
         <div className='stopwatch' >
           <h2>STOPWATCH</h2>
           <h1 className='stopwatch-time'>{this.state.counter}</h1>
-          <button onClick={toggleTimer}>START</button>
+          <button onClick={toggleTimer}>{this.state.toggleBtn}</button>
           <button onClick={reset}>RESET</button>
         </div>
     );
@@ -116,12 +120,16 @@ class StopWatch extends React.Component {
     this.timer = setInterval(() => {
       this.myCounter = this.myCounter + 1;
       this.setState({
-        counter: this.myCounter
+        counter: this.myCounter,
+        toggleBtn: 'STOP',
       });
     }, 1000);
   }
   stopTimer () {
     clearInterval(this.timer);
+    this.setState({
+      toggleBtn: 'START',
+    });
   }
   resetTimer () {
     this.myCounter = 0;
