@@ -1,17 +1,19 @@
+'use strict';
+
 class Model {
-  constructor () {
+  constructor() {
     this.players = [
       {
         name: "Jim Hoskins",
         score: 31,
         id: 1,
       },
-       {
+      {
         name: "Andree Hoskins",
         score: 35,
         id: 2,
       },
-       {
+      {
         name: "Alena Hoskins",
         score: 42,
         id: 3,
@@ -21,7 +23,7 @@ class Model {
     this.player = '';
     this.callback = null;
   }
-  
+
   subscribe(render) {
     this.callback = render;
   }
@@ -30,65 +32,67 @@ class Model {
     this.callback();
   }
 
-  sum () {
-    return this.players.map(player => { return player.score;}).reduce((playerA,playerB)=>{
+  sum() {
+    return this.players.map(player => { return player.score; }).reduce((playerA, playerB) => {
       return (playerB + playerA);
     });
   }
 
-  increment (e) {
+  increment(e) {
     let id = e.target.parentNode.childNodes[1].id;
-    let actual = this.players[id-1];
+    let actual = this.players[id - 1];
     actual.score = actual.score + 1;
     this.callback();
   }
 
-  decrement (e) {
+  decrement(e) {
     let id = e.target.parentNode.childNodes[1].id;
-    let actual = this.players[id-1];
-    if (actual.score>0) {
+    let actual = this.players[id - 1];
+    if (actual.score > 0) {
       actual.score = actual.score - 1;
       this.callback();
     }
   }
 
-  addPlayer () {
+  addPlayer() {
     this.players.push({
       name: this.player,
       score: 0,
-      id: this.id+1,
+      id: this.id + 1,
     });
     this.player = '';
     this.callback();
   }
 
-  onChange (e) {
+  onChange(e) {
     console.log(e.target.value)
     this.player = e.target.value;
     this.callback();
   }
 
-  onSubmit (e) {
+  onSubmit(e) {
     e.preventDefault();
     this.addPlayer();
   }
 }
 
-const Header = ({model}) => {
-  return (<div className='header'>
-            <table className='stats'>
-              <tbody >
-                <tr><td>PLAYERS: </td><td>{model.players.length}</td>
-                </tr>
-                <tr><td>TOTAL POINTS: </td><td>{model.sum()}</td></tr>
-              </tbody>
-            </table>
-          <StopWatch/>
-        </div>);
+const Header = ({ model }) => {
+  return (
+  <div className='header'>
+    <table className='stats'>
+      <tbody >
+        <tr><td>PLAYERS: </td><td>{model.players.length}</td>
+        </tr>
+        <tr><td>TOTAL POINTS: </td><td>{model.sum()}</td></tr>
+      </tbody>
+    </table>
+    <StopWatch />
+  </div>);
 };
 
+// COMPONENTE STOPWHATCH incluido en el componente HEADER
 class StopWatch extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.state = {
       counter: 0,
@@ -96,11 +100,11 @@ class StopWatch extends React.Component {
     };
     this.myCounter = 0;
   }
-  render(){
+  render() {
     const toggleTimer = (e) => {
-      if(this.state.toggleBtn == 'STOP'){
+      if (this.state.toggleBtn == 'STOP') {
         this.stopTimer();
-      }else{
+      } else {
         this.startTimer();
       }
     }
@@ -108,15 +112,15 @@ class StopWatch extends React.Component {
       this.resetTimer();
     }
     return (
-        <div className='stopwatch' >
-          <h2>STOPWATCH</h2>
-          <h1 className='stopwatch-time'>{this.state.counter}</h1>
-          <button onClick={toggleTimer}>{this.state.toggleBtn}</button>
-          <button onClick={reset}>RESET</button>
-        </div>
+      <div className='stopwatch' >
+        <h2>STOPWATCH</h2>
+        <h1 className='stopwatch-time'>{this.state.counter}</h1>
+        <button onClick={toggleTimer}>{this.state.toggleBtn}</button>
+        <button onClick={reset}>RESET</button>
+      </div>
     );
   }
-  startTimer () {
+  startTimer() {
     this.setState({
       counter: this.myCounter,
       toggleBtn: 'STOP',
@@ -128,14 +132,14 @@ class StopWatch extends React.Component {
       });
     }, 1000);
   }
-  stopTimer () {
+  stopTimer() {
     clearInterval(this.timer);
     this.setState({
       toggleBtn: 'START',
     });
   }
-  resetTimer () {
-    
+  resetTimer() {
+
     clearInterval(this.timer);
     this.myCounter = 0;
     this.setState({
@@ -145,42 +149,46 @@ class StopWatch extends React.Component {
   }
 }
 
-const PlayerForm = ({}) => {
+const PlayerForm = ({ }) => {
   return (
     <div className='add-player-form'>
-      <form onSubmit={e => {model.onSubmit(e)}}>
-        <input type="text" placeholder="ENTER A NAME" value={model.player} onChange={e => {model.onChange(e)}}/>
-        <input type='submit' value='ADD PLAYER'/>
+      <form onSubmit={e => { model.onSubmit(e) }}>
+        <input type="text" placeholder="ENTER A NAME" value={model.player} onChange={e => { model.onChange(e) }} />
+        <input type='submit' value='ADD PLAYER' />
       </form>
     </div>
   );
 };
 
-const Score = ({model}) => {
+const Score = ({ model }) => {
   const getPlayers = () => {
     return model.players.map((player, index) => {
-      return (<div className='player' key={index}>
-                <div className='player-name'>{player.name}</div>
-                <div className='player-score counter'>
-                  <button className='counter-action decrement' onClick={
-                    (e)=>model.decrement(e)}>-</button>
-                  <div className='counter-score' id={player.id}>{player.score}</div>
-                  <button className='counter-action  increment' onClick={(e)=>model.increment(e)}>+</button>
-                </div>
-              </div>);
+      return (
+      <div className='player' key={index}>
+        <div className='player-name'>{player.name}</div>
+        <div className='player-score counter'>
+          <button className='counter-action decrement' onClick={
+            (e) => model.decrement(e)}>-</button>
+          <div className='counter-score' id={player.id}>{player.score}</div>
+          <button className='counter-action  increment' onClick={(e) => model.increment(e)}>+</button>
+        </div>
+      </div>
+      );
     });
   }
-  return (<div className='scoreboard'>
-            <Header model={model}/>
-            {getPlayers()}
-            <PlayerForm/>
-          </div>);
+  return (
+  <div className='scoreboard'>
+    <Header model={model} />
+    {getPlayers()}
+    <PlayerForm />
+  </div>);
 }
+
 
 let model = new Model();
 
 let render = () => {
-  ReactDOM.render(<Score title="Scoreboard" model={model}/>, document.getElementById('container'));
+  ReactDOM.render(<Score title="Scoreboard" model={model} />, document.getElementById('container'));
 };
-model.subscribe(render); 
+model.subscribe(render);
 render(); 
