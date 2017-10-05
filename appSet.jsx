@@ -87,7 +87,7 @@ const Header = ({model}) => {
         </div>);
 };
 
-class ABCquiz extends React.Component {
+class StopWatch extends React.Component {
   render(){
     return (
         <div className='stopwatch' >
