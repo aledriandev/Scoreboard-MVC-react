@@ -88,15 +88,34 @@ const Header = ({model}) => {
 };
 
 class StopWatch extends React.Component {
+  constructor (props) {
+    super(props);
+    this.state = {
+      counter: 0,
+    };
+    this.myCounter = 0;
+  }
   render(){
+    const toggle = (e) => {
+      console.log('holi')
+      this.toggleTimer();
+    }
     return (
         <div className='stopwatch' >
           <h2>STOPWATCH</h2>
-          <h1 className='stopwatch-time'>0</h1>
-          <button>START</button>
+          <h1 className='stopwatch-time'>{this.state.counter}</h1>
+          <button onClick={toggle}>START</button>
           <button>RESET</button>
         </div>
     );
+  }
+  toggleTimer () {
+    this.timer = setInterval(() => {
+      this.myCounter = this.myCounter + 1;
+      this.setState({
+        counter: this.myCounter
+      });
+    }, 1000);
   }
 }
 
