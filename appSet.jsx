@@ -109,19 +109,31 @@ class StopWatch extends React.Component {
   }
   render() {
     const toggleTimer = (e) => {
-      if (this.state.toggleBtn == 'STOP') {
+      if (this.state.toggleBtn == 'STOP')
         this.stopTimer();
-      } else {
+      else
         this.startTimer();
-      }
     }
+
     const reset = (e) => {
       this.resetTimer();
     }
+
+    const zero = (num) => {
+      num = num.toString();
+      if (num.length==1) {
+        num = 0+num;
+      }
+      return num;
+    }
+    const centiseconds = zero(this.state.counterMiliSec);
+    const seconds = zero(this.state.counterSec);
+    const minutes = zero(this.state.counterMin);
+
     return (
       <div className='stopwatch' >
         <h2>STOPWATCH</h2>
-        <h1 className='stopwatch-time'>{this.state.counterMin}:{this.state.counterSec}:{this.state.counterMiliSec}</h1>
+        <h1 className='stopwatch-time'>{minutes}:{seconds}:{centiseconds}</h1>
         <button onClick={toggleTimer}>{this.state.toggleBtn}</button>
         <button onClick={reset}>RESET</button>
       </div>
