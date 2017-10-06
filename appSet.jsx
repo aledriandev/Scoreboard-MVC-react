@@ -92,7 +92,6 @@ const Header = ({ model }) => {
     <StopWatch />
   </div>);
 };
-
 // COMPONENTE STOPWHATCH incluido en el componente HEADER
 class StopWatch extends React.Component {
   constructor(props) {
