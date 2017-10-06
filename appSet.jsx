@@ -100,10 +100,12 @@ class StopWatch extends React.Component {
     this.state = {
       counterSec: 0,
       counterMiliSec: 0,
+      counterMin:0,
       toggleBtn: 'START',
     };
     this.myCounter = 0;
     this.myCounterMiliSec = 0;
+    this.myCounterMin = 0;
   }
   render() {
     const toggleTimer = (e) => {
@@ -119,7 +121,7 @@ class StopWatch extends React.Component {
     return (
       <div className='stopwatch' >
         <h2>STOPWATCH</h2>
-        <h1 className='stopwatch-time'>{this.state.counterSec}:{this.state.counterMiliSec}</h1>
+        <h1 className='stopwatch-time'>{this.state.counterMin}:{this.state.counterSec}:{this.state.counterMiliSec}</h1>
         <button onClick={toggleTimer}>{this.state.toggleBtn}</button>
         <button onClick={reset}>RESET</button>
       </div>
@@ -131,19 +133,21 @@ class StopWatch extends React.Component {
       toggleBtn: 'STOP',
     });
     this.timerMiliSec = setInterval(() => {
-      console.log(this.myCounterMiliSec);
+      console.log(this.myCounter);
       this.myCounterMiliSec = this.myCounterMiliSec + 1;
       if (this.myCounterMiliSec==100) {
         this.myCounter = this.myCounter + 1;
-        this.setState({
-          counterSec: this.myCounter,
-        });
+        this.setState({ counterSec: this.myCounter });
         this.myCounterMiliSec = 0;
+
+        if (this.myCounter==60) {
+          this.myCounterMin = this.myCounterMin + 1;
+          this.setState({ counterMin: this.myCounterMin });
+          this.myCounter = 0;
+        }
       }
-      this.setState({
-        counterMiliSec: this.myCounterMiliSec,
-      });
-    }, 10);
+      this.setState({ counterMiliSec: this.myCounterMiliSec });
+    }, 0.5);
   }
   stopTimer() {
     clearInterval(this.timerMiliSec);
@@ -155,10 +159,12 @@ class StopWatch extends React.Component {
     clearInterval(this.timerMiliSec);
     this.myCounter = 0;
     this.myCounterMiliSec = 0;
+    this.myCounterMin = 0;
     this.setState({
       toggleBtn: 'START',
       counterMiliSec: 0,
-      counterSec: 0
+      counterSec: 0,
+      counterMin: 0
     });
   }
 }
