@@ -158,7 +158,7 @@ class StopWatch extends React.Component {
         }
       }
       this.setState({ counterMiliSec: this.myCounterMiliSec });
-    }, 0.1);
+    }, 10);
   }
   stopTimer() {
     clearInterval(this.timerMiliSec);
