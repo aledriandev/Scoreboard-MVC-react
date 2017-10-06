@@ -98,10 +98,12 @@ class StopWatch extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      counter: 0,
+      counterSec: 0,
+      counterMiliSec: 0,
       toggleBtn: 'START',
     };
     this.myCounter = 0;
+    this.myCounterMiliSec = 0;
   }
   render() {
     const toggleTimer = (e) => {
@@ -117,7 +119,7 @@ class StopWatch extends React.Component {
     return (
       <div className='stopwatch' >
         <h2>STOPWATCH</h2>
-        <h1 className='stopwatch-time'>{this.state.counter}</h1>
+        <h1 className='stopwatch-time'>{this.state.counterSec}:{this.state.counterMiliSec}</h1>
         <button onClick={toggleTimer}>{this.state.toggleBtn}</button>
         <button onClick={reset}>RESET</button>
       </div>
@@ -125,28 +127,38 @@ class StopWatch extends React.Component {
   }
   startTimer() {
     this.setState({
-      counter: this.myCounter,
+      counterSec: this.myCounter,
       toggleBtn: 'STOP',
     });
-    this.timer = setInterval(() => {
-      this.myCounter = this.myCounter + 1;
+    this.timerMiliSec = setInterval(() => {
+      console.log(this.myCounterMiliSec);
+      this.myCounterMiliSec = this.myCounterMiliSec + 1;
+      if (this.myCounterMiliSec==100) {
+        this.myCounter = this.myCounter + 1;
+        this.setState({
+          counterSec: this.myCounter,
+        });
+        this.myCounterMiliSec = 0;
+      }
       this.setState({
-        counter: this.myCounter,
+        counterMiliSec: this.myCounterMiliSec,
       });
-    }, 1000);
+    }, 10);
   }
   stopTimer() {
-    clearInterval(this.timer);
+    clearInterval(this.timerMiliSec);
     this.setState({
       toggleBtn: 'START',
     });
   }
   resetTimer() {
-    clearInterval(this.timer);
+    clearInterval(this.timerMiliSec);
     this.myCounter = 0;
+    this.myCounterMiliSec = 0;
     this.setState({
       toggleBtn: 'START',
-      counter: 0
+      counterMiliSec: 0,
+      counterSec: 0
     });
   }
 }
