@@ -133,21 +133,21 @@ class StopWatch extends React.Component {
       toggleBtn: 'STOP',
     });
     this.timerMiliSec = setInterval(() => {
-      console.log(this.myCounter);
       this.myCounterMiliSec = this.myCounterMiliSec + 1;
       if (this.myCounterMiliSec==100) {
         this.myCounter = this.myCounter + 1;
         this.setState({ counterSec: this.myCounter });
         this.myCounterMiliSec = 0;
-
-        if (this.myCounter==60) {
+        
+        console.log(this.myCounter);
+        if (this.myCounter==59) {
           this.myCounterMin = this.myCounterMin + 1;
           this.setState({ counterMin: this.myCounterMin });
-          this.myCounter = 0;
+          this.myCounter = -1;
         }
       }
       this.setState({ counterMiliSec: this.myCounterMiliSec });
-    }, 0.5);
+    }, 0.1);
   }
   stopTimer() {
     clearInterval(this.timerMiliSec);
